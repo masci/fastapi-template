@@ -11,7 +11,7 @@ from fastapi import FastAPI
 
 app = FastAPI()
 settings = Settings()
-boot_time = None
+boot_time: float = None
 
 
 @app.on_event("startup")
