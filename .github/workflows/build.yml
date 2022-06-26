@@ -1,0 +1,83 @@
+name: build
+on:
+  push:
+    branches:
+      - main
+      - dev
+    paths:
+      - .
+      - .github/workflows/build.yml
+
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: myapi
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.10"
+
+    - name: Install Poetry
+      uses: abatilo/actions-poetry@v2.0.0
+      with:
+        poetry-version: 1.1.13
+
+    - name: Setup dependencies
+      run: poetry install
+
+    - name: Run tests
+      run: poetry run pytest
+
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    needs: test
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # - id: 'auth'
+    #   uses: 'google-github-actions/auth@v0'
+    #   with:
+    #     credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+    #     token_format: 'access_token'  # do auth + generate token to be used later
+
+    - name: Docker login
+      uses: 'docker/login-action@v1'
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Extract docker metadata
+      id: meta
+      uses: docker/metadata-action@v1
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+    - name: Build and push image
+      uses: docker/build-push-action@v1
+      with:
+        context: .
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+
+    # - name: Deploy Cloud Run Service
+    #   uses: 'google-github-actions/deploy-cloudrun@v0'
+    #   with:
+    #     service: mutiny-backend-${{ github.ref_name }}
+    #     image: europe-west1-docker.pkg.dev/${{ steps.auth.outputs.project_id }}/mutiny/bligh:${{ github.ref_name }}
+    #     region: europe-west1
