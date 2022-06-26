@@ -48,7 +48,7 @@ jobs:
     - name: Push the same image to Google Artifact Registry
       run: |
         docker tag ghcr.io/${{ env.IMAGE_NAME }}:${{ github.ref_name }} ${{ env.GCP_ARTIFACT_REGISTRY }}/${{ steps.auth.outputs.project_id }}/${{ env.GCP_ARTIFACT_REGISTRY_REPONAME }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
-        docker push ${{ env.GCP_ARTIFACT_REGISTRY }}/${{ steps.auth.outputs.project_id }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+        docker push ${{ env.GCP_ARTIFACT_REGISTRY }}/${{ steps.auth.outputs.project_id }}/${{ env.GCP_ARTIFACT_REGISTRY_REPONAME }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
 
     # - name: Deploy Cloud Run Service
     #   uses: 'google-github-actions/deploy-cloudrun@v0'
