@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "MyApi"
+version = "0.1.0"
+description = "A service based on FastAPI"
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.75.1"
+uvicorn = {extras = ["standard"], version = "^0.17.6"}
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.1"
+autopep8 = "^1.6.0"
+
+[tool.poetry.scripts]
+myapi = "myapi.app:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
