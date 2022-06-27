@@ -1,7 +1,6 @@
 name: deploy
 on:
   registry_package:
-    types: [published]
 
 
 env:
@@ -10,7 +9,7 @@ env:
   GCP_MAIN_SERVICE_NAME: 'fastapi-template-main'
   GCP_DEV_SERVICE_NAME: 'fastapi-template-dev'
   IMAGE_NAME: ${{ github.repository }}
-  IMAGE_TAG: ${{ github.event.registry_package.tag_name }}
+  IMAGE_TAG: ${{ github.event.package.tag_name }}
   GHR_IMAGE: ghcr.io/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
 
