@@ -111,7 +111,7 @@ jobs:
 
     - name: Deploy Cloud Run Dev Service
       uses: 'google-github-actions/deploy-cloudrun@v0'
-      if: github.ref_name == 'dev'
+      if: ${{ github.ref_name == 'dev' }}
       with:
         service: ${{ env.GCP_DEV_SERVICE_NAME }}
         image: ${{ env.GCP_IMAGE }}
@@ -119,7 +119,7 @@ jobs:
 
     - name: Deploy Cloud Run Main Service
       uses: 'google-github-actions/deploy-cloudrun@v0'
-      if: github.ref_name == 'main'
+      if: ${{ github.ref_name == 'main' }}
       with:
         service: ${{ env.GCP_MAIN_SERVICE_NAME }}
         image: ${{ env.GCP_IMAGE }}
