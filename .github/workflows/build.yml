@@ -113,7 +113,7 @@ jobs:
       uses: 'google-github-actions/deploy-cloudrun@v0'
       if: ${{ env.IMAGE_TAG }} == 'dev'
       with:
-        service: ${{ GCP_DEV_SERVICE_NAME }}
+        service: ${{ env.GCP_DEV_SERVICE_NAME }}
         image: ${{ env.GCP_IMAGE }}
         region: europe-west1
 
@@ -121,6 +121,6 @@ jobs:
       uses: 'google-github-actions/deploy-cloudrun@v0'
       if: ${{ env.IMAGE_TAG }} == 'main'
       with:
-        service: ${{ GCP_MAIN_SERVICE_NAME }}
+        service: ${{ env.GCP_MAIN_SERVICE_NAME }}
         image: ${{ env.GCP_IMAGE }}
         region: europe-west1
