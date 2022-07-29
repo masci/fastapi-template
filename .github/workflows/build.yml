@@ -9,6 +9,8 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+
+env:
   GCP_ARTIFACT_REGISTRY: 'europe-west1-docker.pkg.dev'
   GCP_ARTIFACT_REGISTRY_REPONAME: 'docker-registry'
   GCP_MAIN_SERVICE_NAME: 'fastapi-template-main'
